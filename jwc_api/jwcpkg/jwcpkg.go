@@ -40,8 +40,13 @@ func checkError(err error){
 /**
 * 获取这两个不知道干什么的值
 */
+<<<<<<< HEAD
 func Getsp() map[string]string{
         view,err:=http.Get(login_url_gate0)
+=======
+func getsp(url string)map[string]string{
+        view,err:=http.Get(url)
+>>>>>>> origin/master
         checkError(err)
         //去拿__VIEWSTATE
         body,err:=ioutil.ReadAll(view.Body)
@@ -58,12 +63,20 @@ func Getsp() map[string]string{
 		if VIEWSTATEGENERATOR!=nil{
 			res["VIEWSTATEGENERATOR"]=VIEWSTATEGENERATOR[0][1]			
 			}
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/master
 		return res	
 	}
 /**
 *带cookie去拿第二波不明变量   否则 会出现Object Move <a href>here</a>
 */
+<<<<<<< HEAD
 func GetspAG(cookies []*http.Cookie,c *http.Client,name string,userno string) map[string]string{
+=======
+func getspAG(cookies []*http.Cookie,c *http.Client,name string,userno string) map[string]string{
+>>>>>>> origin/master
 		req,_:=http.NewRequest("GET","http://210.33.60.8/xskbcx.aspx?xh="+userno+"&xm="+url.QueryEscape(name)+"&gnmkdm=N121603",nil)
 		for _,v:=range cookies{
 			req.AddCookie(v)
@@ -88,7 +101,11 @@ func GetspAG(cookies []*http.Cookie,c *http.Client,name string,userno string) ma
 /**
 *模拟post表单
 */
+<<<<<<< HEAD
 func Post(Rurl string,c *http.Client,username string,password string,verify_code string,VIEWSTATE string,VIEWSTATEGENERATOR string,temp_cookies []*http.Cookie) []*http.Cookie{
+=======
+func post(Rurl string,c *http.Client,username string,password string,verify_code string,VIEWSTATE string,VIEWSTATEGENERATOR string,temp_cookies []*http.Cookie) []*http.Cookie{
+>>>>>>> origin/master
     postValue:=url.Values{}
   	cd:=mahonia.NewEncoder("gb2312")
   	rb:=cd.ConvertString("学生")
@@ -130,10 +147,15 @@ func Testpage(c *http.Client) string{
  	return string(allData)	
 	}
 
+<<<<<<< HEAD
 /**
 *
 */
 func GetStuName(c *http.Client) string{
+=======
+//获取学生姓名
+func getStuName(c *http.Client) string{
+>>>>>>> origin/master
  	req,err:=http.NewRequest("GET",logged_url,nil)
  	checkError(err)
     finalRes,err:=c.Do(req)	
@@ -151,7 +173,11 @@ func GetStuName(c *http.Client) string{
 	}
 
 //Get Course info.
+<<<<<<< HEAD
 func GetCourseData(c *http.Client)string{
+=======
+func getCourseData(c *http.Client)string{
+>>>>>>> origin/master
  	req,err:=http.NewRequest("GET",courseURL,nil)
  	//NICE
  	req.Header.Set("Referer",courseURL)
@@ -165,14 +191,22 @@ func GetCourseData(c *http.Client)string{
 	}
 
     //获取登陆界面的cookie
+<<<<<<< HEAD
 func GetLoginCo(c *http.Client)[]*http.Cookie{	
+=======
+func getLoginCo(c *http.Client)[]*http.Cookie{	
+>>>>>>> origin/master
     req, _ := http.NewRequest("GET", login_url_gate0, nil)
     res, _ := c.Do(req)	
 	return res.Cookies()
 	}
 
 	//第二次 带着登陆界面的cookie去验证码页面拿验证码
+<<<<<<< HEAD
 func GetVRcode(c *http.Client,cookies []*http.Cookie)bool{
+=======
+func getVRcode(c *http.Client,cookies []*http.Cookie)bool{
+>>>>>>> origin/master
    	//用刚才生成的cookie去爬 验证码   否则会504!!!!!	
     req, _ := http.NewRequest("GET", vrcode_url_gate0, nil)
     for _, v := range cookies{

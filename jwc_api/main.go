@@ -3,6 +3,10 @@ package main
 import (
 	_ "jwc_api/docs"
 	_ "jwc_api/routers"
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/master
 	"github.com/astaxie/beego"
 )
 

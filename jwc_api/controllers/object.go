@@ -1,9 +1,10 @@
 package controllers
 
 import (
-	"jwc_api/models"
 	"encoding/json"
+
 	"github.com/astaxie/beego"
+	"github.com/scbizu/Zafu_jwcInterface/jwc_api/models"
 )
 
 // Operations about object
@@ -88,4 +89,3 @@ func (o *ObjectController) Delete() {
 	o.Data["json"] = "delete success!"
 	o.ServeJSON()
 }
-

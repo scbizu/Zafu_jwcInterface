@@ -8,7 +8,7 @@
 package routers
 
 import (
-	"jwc_api/controllers"
+	"github.com/scbizu/Zafu_jwcInterface/jwc_api/controllers"
 
 	"github.com/astaxie/beego"
 )
@@ -24,8 +24,16 @@ func init() {
 		beego.NSNamespace("/login",
 			beego.NSInclude(
 				&controllers.UserController{},
-				),
 			),
+		),
+
+		beego.NSNamespace("/jwc",
+			beego.NSInclude(
+				&controllers.JwcController{},
+			),
+		),
 	)
 	beego.AddNamespace(ns)
+	beego.Router("/vrcode", &controllers.JwcVrController{})
+	beego.Router("/test", &controllers.TestController{})
 }

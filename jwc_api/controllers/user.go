@@ -1,8 +1,9 @@
 package controllers
 
 import (
-	"jwc_api/models"
 	"encoding/json"
+
+	"github.com/scbizu/Zafu_jwcInterface/jwc_api/models"
 
 	"github.com/astaxie/beego"
 )
@@ -116,4 +117,3 @@ func (u *UserController) Logout() {
 	u.Data["json"] = "logout success"
 	u.ServeJSON()
 }
-

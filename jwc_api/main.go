@@ -1,13 +1,9 @@
 package main
 
 import (
-	_ "jwc_api/docs"
-	_ "jwc_api/routers"
-<<<<<<< HEAD
-=======
-
->>>>>>> origin/master
 	"github.com/astaxie/beego"
+	_ "github.com/scbizu/Zafu_jwcInterface/jwc_api/docs"
+	_ "github.com/scbizu/Zafu_jwcInterface/jwc_api/routers"
 )
 
 func main() {

@@ -20,10 +20,9 @@ func Getvrcode(client *http.Client) func() (*http.Client, []*http.Cookie) {
 	for _, v := range res.Cookies() {
 		req.AddCookie(v)
 	}
-
-	file, _ := os.Create("verify.gif")
+	res, _ = client.Do(req)
+	file, _ := os.Create("code/verify.gif")
 	io.Copy(file, res.Body)
-
 	Vrcode := func() (*http.Client, []*http.Cookie) {
 		res.Body.Close()
 		return client, res.Cookies()

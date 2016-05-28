@@ -8,7 +8,7 @@
 package routers
 
 import (
-	"github.com/scbizu/Zafu_jwcInterface/jwc_api/controllers"
+	"github.com/scbizu/Zafu_jwcInterface.git/jwc_api/controllers"
 
 	"github.com/astaxie/beego"
 )

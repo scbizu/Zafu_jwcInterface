@@ -2,8 +2,8 @@ package main
 
 import (
 	"github.com/astaxie/beego"
-	_ "github.com/scbizu/Zafu_jwcInterface/jwc_api/docs"
-	_ "github.com/scbizu/Zafu_jwcInterface/jwc_api/routers"
+	_ "github.com/scbizu/Zafu_jwcInterface.git/jwc_api/docs"
+	_ "github.com/scbizu/Zafu_jwcInterface.git/jwc_api/routers"
 )
 
 func main() {

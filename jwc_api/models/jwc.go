@@ -3,7 +3,7 @@ package models
 import (
 	"net/http"
 
-	"github.com/scbizu/Zafu_jwcInterface/jwc_api/jwcpkg"
+	"github.com/scbizu/Zafu_jwcInterface.git/jwc_api/jwcpkg"
 )
 
 var T_cookies []*http.Cookie

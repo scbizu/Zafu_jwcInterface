@@ -11,6 +11,8 @@ type JwcVrController struct {
 
 func (j *JwcVrController) Get() {
 	client := models.InitClient()
-	_ = models.Getvrcode(client)
+	Tfunc := models.Getvrcode(client)
+	_, T_CO := Tfunc()
+	models.SetT_cookie(T_CO)
 	j.TplName = "vrcode.tpl"
 }

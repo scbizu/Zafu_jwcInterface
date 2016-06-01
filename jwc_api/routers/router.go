@@ -27,13 +27,14 @@ func init() {
 			),
 		),
 
-		beego.NSNamespace("/jwc",
-			beego.NSInclude(
-				&controllers.JwcController{},
-			),
-		),
+		// beego.NSNamespace("/jwc",
+		// 	beego.NSInclude(
+		// 		&controllers.JwcController{},
+		// 	),
+		// ),
 	)
 	beego.AddNamespace(ns)
+	beego.Router("/jwc", &controllers.JwcController{})
 	beego.Router("/vrcode", &controllers.JwcVrController{})
 	beego.Router("/test", &controllers.TestController{})
 }

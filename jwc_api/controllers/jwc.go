@@ -1,6 +1,9 @@
 package controllers
 
-import "github.com/astaxie/beego"
+import (
+	"github.com/astaxie/beego"
+	"github.com/scbizu/Zafu_jwcInterface.git/jwc_api/models"
+)
 
 // Operations about object
 type JwcController struct {
@@ -13,14 +16,18 @@ type JwcController struct {
 // @Success 200 {string}
 // @Failure 403 body is empty
 // @router / [post]
-func (o *JwcController) Post() {
-	//	c:=&http.Client{}
-
+func (jwc *JwcController) Post() {
+	user := jwc.GetString("username")
+	pass := jwc.GetString("password")
+	vrcode := jwc.GetString("vrcode")
+	resView := models.Getsp()
+	VS := resView["VIEWSTATE"]
+	VG := resView["VIEWSTATEGENERATOR"]
+	_ = models.Post(models.Get_Client(), user, pass, vrcode, VS, VG, models.GetT_cookie())
+	flag, str := models.Login_OK(models.Client)
+	if flag {
+		jwc.Ctx.WriteString(str)
+	} else {
+		jwc.Ctx.WriteString("Failed")
+	}
 }
-
-// func (o *JwcController) Get() {
-// 	c := &http.Client{}
-// 	stuid := o.Ctx.Input.Param(":stuid")
-// 	password := o.Ctx.Input.Param(":password")
-// 	ok := models.Login_OK(c,stuid,password)
-// }

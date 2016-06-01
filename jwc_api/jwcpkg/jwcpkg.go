@@ -5,12 +5,9 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
-	"net/http/cookiejar"
 	"net/url"
 	"os"
 	"regexp"
-
-	"github.com/scbizu/mahonia"
 )
 
 //全局Cookies
@@ -43,28 +40,6 @@ func checkError(err error) {
 * 获取这两个不知道干什么的值
  */
 
-func Getsp() map[string]string {
-	view, err := http.Get(login_url_gate0)
-	checkError(err)
-	//去拿__VIEWSTATE
-	body, err := ioutil.ReadAll(view.Body)
-	checkError(err)
-	regular := `<input.type="hidden".name="__VIEWSTATE".value="(.*)" />`
-	pattern := regexp.MustCompile(regular)
-	VIEWSTATE := pattern.FindAllStringSubmatch(string(body), -1)
-	//拿__VIEWSTATEGENERATOR
-	retor := `<input.type="hidden".name="__VIEWSTATEGENERATOR".value="(.*)" />`
-	patterntor := regexp.MustCompile(retor)
-	VIEWSTATEGENERATOR := patterntor.FindAllStringSubmatch(string(body), -1)
-	res := make(map[string]string)
-	res["VIEWSTATE"] = VIEWSTATE[0][1]
-	if VIEWSTATEGENERATOR != nil {
-		res["VIEWSTATEGENERATOR"] = VIEWSTATEGENERATOR[0][1]
-	}
-
-	return res
-}
-
 /**
 *带cookie去拿第二波不明变量   否则 会出现Object Move <a href>here</a>
  */
@@ -92,34 +67,6 @@ func GetspAG(cookies []*http.Cookie, c *http.Client, name string, userno string)
 	return res
 }
 
-/**
-*模拟post表单
- */
-func Post(Rurl string, c *http.Client, username string, password string, verify_code string, VIEWSTATE string, VIEWSTATEGENERATOR string, temp_cookies []*http.Cookie) []*http.Cookie {
-	postValue := url.Values{}
-	cd := mahonia.NewEncoder("gb2312")
-	rb := cd.ConvertString("学生")
-	//准备POST的数据
-	postValue.Add("txtUserName", username)
-	postValue.Add("TextBox2", password)
-	postValue.Add("txtSecretCode", verify_code)
-	postValue.Add("__VIEWSTATE", VIEWSTATE)
-	postValue.Add("__VIEWSTATEGENERATOR", VIEWSTATEGENERATOR)
-	postValue.Add("Button1", "")
-	postValue.Add("lbLanguage", "")
-	postValue.Add("hidPdrs", "")
-	postValue.Add("hidsc", "")
-	postValue.Add("RadioButtonList1", rb)
-	//开始POST   这次POST到登陆界面   带上第一次请求的cookie 和 验证码  和 一些必要的数据
-	postUrl, _ := url.Parse(Rurl)
-	Jar, _ := cookiejar.New(nil)
-	Jar.SetCookies(postUrl, temp_cookies)
-	c.Jar = Jar
-	resp, _ := c.PostForm(Rurl, postValue)
-	cookies = resp.Cookies()
-	return cookies
-}
-
 /*
 *测试结果
  */
@@ -141,22 +88,6 @@ func Testpage(c *http.Client) string {
 /**
 *
  */
-func GetStuName(c *http.Client) string {
-	req, err := http.NewRequest("GET", logged_url, nil)
-	checkError(err)
-	finalRes, err := c.Do(req)
-	checkError(err)
-	allData, err := ioutil.ReadAll(finalRes.Body)
-	checkError(err)
-	defer finalRes.Body.Close()
-	cd := mahonia.NewEncoder("gb2312")
-	rb := cd.ConvertString("<span.id=\"xhxm\">(.*)同学</span>")
-	//Regexp
-	regular := rb
-	pattern := regexp.MustCompile(regular)
-	stuName := pattern.FindAllStringSubmatch(string(allData), -1)
-	return stuName[0][1]
-}
 
 //Get Course info.
 

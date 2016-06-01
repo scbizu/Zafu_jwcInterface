@@ -9,8 +9,8 @@ import (
 
 //closure
 func InitClient() *http.Client {
-	client := &http.Client{}
-	return client
+	Client = &http.Client{}
+	return Client
 }
 
 func Getvrcode(client *http.Client) func() (*http.Client, []*http.Cookie) {

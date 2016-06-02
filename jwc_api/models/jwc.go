@@ -16,8 +16,9 @@ var T_cookies []*http.Cookie
 //init Client
 var Client *http.Client
 
-func init() {
+func InitClient() *http.Client {
 	Client = &http.Client{}
+	return Client
 }
 
 const (
@@ -91,7 +92,7 @@ func Getsp() map[string]string {
 /**
 *模拟post表单
  */
-func Post(c *http.Client, username string, password string, verify_code string, VIEWSTATE string, VIEWSTATEGENERATOR string, temp_cookies []*http.Cookie) []*http.Cookie {
+func Post(c *http.Client, username string, password string, verify_code string, VIEWSTATE string, VIEWSTATEGENERATOR string, temp_cookies []*http.Cookie) ([]*http.Cookie, *http.Client) {
 	postValue := url.Values{}
 	cd := mahonia.NewEncoder("gb2312")
 	rb := cd.ConvertString("学生")
@@ -113,7 +114,7 @@ func Post(c *http.Client, username string, password string, verify_code string, 
 	c.Jar = Jar
 	resp, _ := c.PostForm(default_url, postValue)
 	cookies := resp.Cookies()
-	return cookies
+	return cookies, c
 }
 
 //Get stu name

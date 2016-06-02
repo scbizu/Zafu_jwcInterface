@@ -21,7 +21,7 @@ func init() {
 			),
 		),
 
-		beego.NSNamespace("/login",
+		beego.NSNamespace("/user",
 			beego.NSInclude(
 				&controllers.UserController{},
 			),
@@ -37,4 +37,5 @@ func init() {
 	beego.Router("/jwc", &controllers.JwcController{})
 	beego.Router("/vrcode", &controllers.JwcVrController{})
 	beego.Router("/test", &controllers.TestController{})
+	beego.Router("/course", &controllers.CourseController{})
 }

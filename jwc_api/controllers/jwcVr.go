@@ -11,8 +11,11 @@ type JwcVrController struct {
 
 func (j *JwcVrController) Get() {
 	client := models.InitClient()
-	Tfunc := models.Getvrcode(client)
-	_, T_CO := Tfunc()
+	beego.Debug(client)
+	c, T_CO := models.Getvrcode(client)
 	models.SetT_cookie(T_CO)
+	beego.Debug(T_CO)
+	models.Client = c
+	//	beego.Debug(c)
 	j.TplName = "vrcode.tpl"
 }

@@ -38,4 +38,5 @@ func init() {
 	beego.Router("/vrcode", &controllers.JwcVrController{})
 	beego.Router("/test", &controllers.TestController{})
 	beego.Router("/course", &controllers.CourseController{})
+	beego.Router("/exam", &controllers.ExamController{})
 }

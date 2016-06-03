@@ -33,6 +33,8 @@ const (
 	default_url string = "http://210.33.60.8/default2.aspx"
 	//课程表
 	courseURL string = "http://210.33.60.8/xskbcx.aspx?xh=201305070123"
+	//考试安排
+	examURL string = "http://210.33.60.8/xskscx.aspx?xh=201305070123"
 )
 
 //Check Error

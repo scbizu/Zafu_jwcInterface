@@ -27,7 +27,8 @@ func Getvrcode(client *http.Client) (*http.Client, []*http.Cookie) {
 	Res, _ := client.Do(req)
 	//test
 	//beego.Debug(Res.Cookies())
-	file, _ := os.Create("code/verify.gif")
+	fileName := "code/" + StuNo + ".gif"
+	file, _ := os.Create(fileName)
 	io.Copy(file, Res.Body)
 
 	return client, res.Cookies()

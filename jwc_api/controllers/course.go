@@ -14,5 +14,7 @@ func (this *CourseController) Get() {
 	c := models.Client
 	str := models.GetCourseData(c)
 	data := jwcpkg.Fetchclass(str)
-	this.Ctx.WriteString(data)
+	//	this.Ctx.WriteString(data)
+	this.Data["json"] = data
+	this.ServeJSON(true)
 }

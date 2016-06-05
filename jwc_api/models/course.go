@@ -7,7 +7,8 @@ import (
 
 //Get Course info.
 func GetCourseData(c *http.Client) string {
-	req, err := http.NewRequest("GET", courseURL, nil)
+	CourseURL := courseURL + StuNo
+	req, err := http.NewRequest("GET", CourseURL, nil)
 	//NICE
 	req.Header.Set("Referer", courseURL)
 	checkError(err)

@@ -18,6 +18,7 @@ type JwcController struct {
 // @router / [post]
 func (jwc *JwcController) Post() {
 	user := jwc.GetString("username")
+	models.StuNo = user
 	pass := jwc.GetString("password")
 	vrcode := jwc.GetString("vrcode")
 	beego.Debug(pass)

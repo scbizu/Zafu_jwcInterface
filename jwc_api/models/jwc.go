@@ -16,6 +16,8 @@ var T_cookies []*http.Cookie
 //init Client
 var Client *http.Client
 
+var StuNo string
+
 func InitClient() *http.Client {
 	Client = &http.Client{}
 	return Client
@@ -28,13 +30,13 @@ const (
 	//模拟登陆第一个入口验证码地址
 	vrcode_url_gate0 string = "http://210.33.60.8/CheckCode.aspx"
 	//首页地址
-	logged_url string = "http://210.33.60.8/xs_main.aspx?xh=201305070123"
+	logged_url string = "http://210.33.60.8/xs_main.aspx?xh="
 	//默认登录页
 	default_url string = "http://210.33.60.8/default2.aspx"
 	//课程表
-	courseURL string = "http://210.33.60.8/xskbcx.aspx?xh=201305070123"
+	courseURL string = "http://210.33.60.8/xskbcx.aspx?xh="
 	//考试安排
-	examURL string = "http://210.33.60.8/xskscx.aspx?xh=201305070123"
+	examURL string = "http://210.33.60.8/xskscx.aspx?xh="
 )
 
 //Check Error
@@ -57,18 +59,6 @@ func GetT_cookie() []*http.Cookie {
 func Get_Client() *http.Client {
 	return Client
 }
-
-// func GetStu(default_url string, c *http.Client, username string, password string, verify_code string) {
-// 	viewRes := jwcpkg.Getsp()
-// 	VIEWSTATE := viewRes["VIEWSTATE"]
-// 	VIEWSTATEGENERATOR := viewRes["VIEWSTATEGENERATOR"]
-// 	_ = jwcpkg.Post(default_url, c, username, password, verify_code, VIEWSTATE, VIEWSTATEGENERATOR, T_cookies)
-// }
-
-// func Get_Code(c *http.Client) []*http.Cookie {
-// 	T_cookies = jwcpkg.GetLoginCo(c)
-// 	jwcpkg.GetVRcode(c, T_cookies)
-// }
 
 func Getsp() map[string]string {
 	view, err := http.Get(login_url_gate0)
@@ -122,7 +112,8 @@ func Post(c *http.Client, username string, password string, verify_code string, 
 //Get stu name
 func GetStuName(c *http.Client) string {
 	restuName := ""
-	req, err := http.NewRequest("GET", logged_url, nil)
+	Logged_url := logged_url + StuNo
+	req, err := http.NewRequest("GET", Logged_url, nil)
 	checkError(err)
 	finalRes, err := c.Do(req)
 	checkError(err)

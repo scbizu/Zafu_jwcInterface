@@ -6,7 +6,8 @@ import (
 )
 
 func GetExaminfo(c *http.Client) string {
-	req, err := http.NewRequest("GET", examURL, nil)
+	ExamURL := examURL + StuNo
+	req, err := http.NewRequest("GET", ExamURL, nil)
 	//NICE
 	req.Header.Set("Referer", examURL)
 	checkError(err)

@@ -9,12 +9,6 @@ import (
 	"github.com/astaxie/beego"
 )
 
-//closure
-// func InitClient() *http.Client {
-// 	Client = &http.Client{}
-// 	return Client
-// }
-
 func Getvrcode(client *http.Client) (*http.Client, []*http.Cookie) {
 	req, _ := http.NewRequest("GET", login_url_gate0, nil)
 	res, _ := client.Do(req)

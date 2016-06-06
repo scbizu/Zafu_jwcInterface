@@ -10,7 +10,7 @@ func GetCourseData(c *http.Client) string {
 	CourseURL := courseURL + StuNo
 	req, err := http.NewRequest("GET", CourseURL, nil)
 	//NICE
-	req.Header.Set("Referer", courseURL)
+	req.Header.Set("Referer", CourseURL)
 	checkError(err)
 	finalRes, err := c.Do(req)
 	checkError(err)

@@ -10,6 +10,8 @@ type JwcVrController struct {
 }
 
 func (j *JwcVrController) Get() {
+	models.StuNo = j.GetString("stuno")
+	beego.Debug(models.StuNo)
 	client := models.InitClient()
 	beego.Debug(client)
 	c, T_CO := models.Getvrcode(client)
@@ -17,5 +19,6 @@ func (j *JwcVrController) Get() {
 	beego.Debug(T_CO)
 	models.Client = c
 	//	beego.Debug(c)
+	j.Data["StuNo"] = models.StuNo
 	j.TplName = "vrcode.tpl"
 }

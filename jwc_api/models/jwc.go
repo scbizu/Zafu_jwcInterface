@@ -13,6 +13,8 @@ import (
 
 var T_cookies []*http.Cookie
 
+var Login_co []*http.Cookie
+
 //init Client
 var Client *http.Client
 
@@ -37,10 +39,12 @@ const (
 	courseURL string = "http://210.33.60.8/xskbcx.aspx?xh="
 	//考试安排
 	examURL string = "http://210.33.60.8/xskscx.aspx?xh="
+	//查成绩
+	scoreURL string = "http://210.33.60.8/xscjcx.aspx?xh="
 )
 
 //Check Error
-func checkError(err error) {
+func CheckError(err error) {
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -62,10 +66,10 @@ func Get_Client() *http.Client {
 
 func Getsp() map[string]string {
 	view, err := http.Get(login_url_gate0)
-	checkError(err)
+	CheckError(err)
 	//去拿__VIEWSTATE
 	body, err := ioutil.ReadAll(view.Body)
-	checkError(err)
+	CheckError(err)
 	regular := `<input.type="hidden".name="__VIEWSTATE".value="(.*)" />`
 	pattern := regexp.MustCompile(regular)
 	VIEWSTATE := pattern.FindAllStringSubmatch(string(body), -1)
@@ -114,11 +118,11 @@ func GetStuName(c *http.Client) string {
 	restuName := ""
 	Logged_url := logged_url + StuNo
 	req, err := http.NewRequest("GET", Logged_url, nil)
-	checkError(err)
+	CheckError(err)
 	finalRes, err := c.Do(req)
-	checkError(err)
+	CheckError(err)
 	allData, err := ioutil.ReadAll(finalRes.Body)
-	checkError(err)
+	CheckError(err)
 	defer finalRes.Body.Close()
 	cd := mahonia.NewEncoder("gb2312")
 	rb := cd.ConvertString("<span.id=\"xhxm\">(.*)同学</span>")

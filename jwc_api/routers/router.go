@@ -37,6 +37,7 @@ func init() {
 	beego.Router("/jwc", &controllers.JwcController{})
 	beego.Router("/vrcode", &controllers.JwcVrController{})
 	beego.Router("/test", &controllers.TestController{})
-	beego.Router("/course", &controllers.CourseController{})
+	//	beego.Router("/course", &controllers.CourseController{})
 	beego.Router("/exam", &controllers.ExamController{})
+	beego.Router("/score", &controllers.ScoreController{})
 }

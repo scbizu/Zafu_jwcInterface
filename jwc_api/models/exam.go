@@ -10,11 +10,11 @@ func GetExaminfo(c *http.Client) string {
 	req, err := http.NewRequest("GET", ExamURL, nil)
 	//NICE
 	req.Header.Set("Referer", ExamURL)
-	checkError(err)
+	CheckError(err)
 	finalRes, err := c.Do(req)
-	checkError(err)
+	CheckError(err)
 	allData, err := ioutil.ReadAll(finalRes.Body)
-	checkError(err)
+	CheckError(err)
 	finalRes.Body.Close()
 	return string(allData)
 }

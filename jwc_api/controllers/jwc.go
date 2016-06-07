@@ -21,14 +21,16 @@ func (jwc *JwcController) Post() {
 	models.StuNo = user
 	pass := jwc.GetString("password")
 	vrcode := jwc.GetString("vrcode")
-	beego.Debug(pass)
+	//	beego.Debug(pass)
 	resView := models.Getsp()
 	VS := resView["VIEWSTATE"]
 	VG := resView["VIEWSTATEGENERATOR"]
-	_, c := models.Post(models.Client, user, pass, vrcode, VS, VG, models.GetT_cookie())
+	cookie, c := models.Post(models.Client, user, pass, vrcode, VS, VG, models.GetT_cookie())
 	flag, _ := models.Login_OK(c)
 	if flag {
 		models.Client = c
+		models.Login_co = cookie
+		beego.Debug(models.Login_co)
 		jwc.Ctx.WriteString("true")
 	} else {
 		jwc.Ctx.WriteString("Failed")

@@ -1,15 +1,15 @@
 package models
 
 import (
+	"bytes"
 	"io/ioutil"
 	"net/http"
 	"net/url"
 	"regexp"
-	"strings"
+	"strconv"
 
 	"github.com/astaxie/beego"
-
-	"gopkg.in/iconv.v1"
+	"github.com/scbizu/mahonia"
 )
 
 func GetScoreinfo(c *http.Client) string {
@@ -44,44 +44,65 @@ func GetscoreVg(str string) string {
 
 func FindOutScore(client *http.Client, Vs string, Vg string, xn string, xq string, btn_xq string, login_co []*http.Cookie) string {
 	ScoreURL := scoreURL + StuNo
-	beego.Debug(ScoreURL)
+	// beego.Debug(ScoreURL)
+	// beego.Debug(Vs)
 	getScore := url.Values{}
-	cd, _ := iconv.Open("gbk", "utf-8")
-	getScore.Add("__EVENTTARGET", "")
-	getScore.Add("__EVENTARGUMENT", "")
-	getScore.Add("hidLanguage", "")
+	cd := mahonia.NewEncoder("gb2312")
+	// getScore.Set("__EVENTTARGET", "")
+	// getScore.Add("__EVENTARGUMENT", "")
+	// getScore.Add("hidLanguage", "")
 	getScore.Add("__VIEWSTATE", Vs)
 	getScore.Add("__VIEWSTATEGENERATOR", Vg)
-	getScore.Add("ddlXN", "2015-2016")
-	getScore.Add("ddlXQ", "2")
+	// getScore.Add("ddlXN", "")
+	// getScore.Add("ddlXQ", "")
 	getScore.Add("ddl_kcxz", "")
-	getScore.Add("btn_xq", cd.ConvString("学期成绩"))
+	getScore.Add("btn_zcj", cd.ConvertString("历年成绩"))
 
-	req, err := http.NewRequest("POST", ScoreURL, strings.NewReader(getScore.Encode()))
-	beego.Debug(getScore.Encode())
+	// postUrl, _ := url.Parse(ScoreURL)
+	// Jar, _ := cookiejar.New(nil)
+	// Jar.SetCookies(postUrl, login_co)
+	// client.Jar = Jar
+
+	req, err := http.NewRequest("POST", ScoreURL, bytes.NewBufferString(getScore.Encode()))
+	//	beego.Debug(req)
 	if err != nil {
 		beego.Debug(err)
 	}
-	req.Header.Set("Referer", ScoreURL)
 
 	for _, v := range Login_co {
 		req.AddCookie(v)
 		beego.Debug(v)
 	}
-
-	if err != nil {
-		beego.Debug(err)
-	}
+	req.Header.Add("Referer", ScoreURL)
+	req.Header.Add("Content-Type", "application/x-www-form-urlencoded")
+	req.Header.Add("Content-Length", strconv.Itoa(len(getScore.Encode())))
 	Res, err := client.Do(req)
 	if err != nil {
 		beego.Debug(err)
 	}
-	beego.Debug(Res.Status)
-	body, err := ioutil.ReadAll(Res.Body)
+
+	// if Res.Status == "200 OK" {
+	// 	return client, nil
+	// } else {
+	// 	return nil, errors.New("Post was denied")
+	// }
+	data, _ := ioutil.ReadAll(Res.Body)
 	defer Res.Body.Close()
+	return string(data)
+}
+
+func GetTestfunc(c *http.Client) string {
+	ScoreURL := scoreURL + StuNo
+	Req, err := http.NewRequest("GET", ScoreURL, nil)
 	if err != nil {
 		beego.Debug(err)
 	}
-	//beego.Debug(string(body))
-	return string(body)
+	Req.Header.Set("Referer", ScoreURL)
+	Res, err := c.Do(Req)
+	if err != nil {
+		beego.Debug(err)
+	}
+	data, _ := ioutil.ReadAll(Res.Body)
+	defer Res.Body.Close()
+	return string(data)
 }

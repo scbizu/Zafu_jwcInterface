@@ -28,6 +28,17 @@ type Classinfo struct {
 	Place    map[string]string
 }
 
+//成绩相关
+type Scoreinfo struct {
+	ClassName string
+	Credit    string
+	GPA       string
+	Score     string
+	Academy   string
+	ReTest    string
+	Rebuild   string
+}
+
 func HaveThreeClass(str string) (bool, int) {
 	regular := `<td align="Center" rowspan="2">(.*?)</td>`
 	pattern := regexp.MustCompile(regular)
@@ -128,4 +139,67 @@ func FetchExam(str string) map[string]*Examinfo {
 		//	beego.Debug(i-1, class, deadline)
 	}
 	return examInfo
+}
+
+// func DirectTbody(str string) string {
+// 	regular := `<table class="datelist" cellspacing="0" cellpadding="3" border="0" id="Datagrid1" style="DISPLAY:block">(.*?)</table>`
+// 	pattern := regexp.MustCompile(regular)
+// 	list := pattern.FindAllStringSubmatch(str, -1)
+// 	return list[0][1]
+// }
+//
+// func FetchScoreTR(str string) map[string]*Scoreinfo {
+//
+// 	scoreinfo := make(map[string]*Scoreinfo)
+// 	cd, _ := iconv.Open("utf-8", "gbk")
+// 	defer cd.Close()
+// 	regular := `<tr>(.*?)</tr>`
+// 	pattern := regexp.MustCompile(regular)
+// 	list := pattern.FindAllStringSubmatch(str, -1)
+// 	listLen := len(list)
+//
+// 	regularALT := `<tr class="alt">(.*?)</tr>`
+// 	patternALT := regexp.MustCompile(regularALT)
+// 	listALT := patternALT.FindAllStringSubmatch(str, -1)
+// 	listLenALT := len(list)
+// 	all := make([]string, listLen+listLenALT)
+// 	for i := 0; i < listLen+listLenALT; i = i + 2 {
+// 		all[i] = list[i/2][1]
+// 		beego.Debug(all[i])
+// 	}
+// 	for i := 1; i < listLenALT+listLen; i = i + 2 {
+// 		all[i] = listALT[(i-1)/2][1]
+// 		beego.Debug(all[i])
+// 	}
+//
+// 	for i := 0; i < len(all); i++ {
+// 		Score := FetchScoreTD(all[i])
+// 		beego.Debug(Score)
+// 		scoreinfo[strconv.Itoa(i)] = Score
+// 	}
+// 	return scoreinfo
+// }
+
+func FetchScoreTD(str string) map[string]*Scoreinfo {
+	scoreinfo := make(map[string]*Scoreinfo)
+	cd, _ := iconv.Open("utf-8", "gbk")
+	defer cd.Close()
+	regular := `<td>(.*?)</td>`
+	pattern := regexp.MustCompile(regular)
+	info := pattern.FindAllStringSubmatch(str, -1)
+	// infoLen:=	len(info)
+	beego.Debug(len(info))
+	for i := 1; i < (len(info)-18)/15; i++ {
+		Classname := cd.ConvString(info[15*(i+1)+4][1])
+		Credit := cd.ConvString(info[15*(i+1)+7][1])
+		GPA := cd.ConvString(info[15*(i+1)+8][1])
+		score := cd.ConvString(info[15*(i+1)+9][1])
+		Academy := cd.ConvString(info[15*(i+1)+13][1])
+		ReTest := cd.ConvString(info[15*(i+1)+11][1])
+		Rebuild := cd.ConvString(info[15*(i+1)+12][1])
+		Score := &Scoreinfo{Classname, Credit, GPA, score, Academy, ReTest, Rebuild}
+		beego.Debug(Score)
+		scoreinfo[strconv.Itoa(i-1)] = Score
+	}
+	return scoreinfo
 }

@@ -2,8 +2,8 @@ package controllers
 
 import (
 	"github.com/astaxie/beego"
-	"github.com/scbizu/Zafu_jwcInterface.git/jwc_api/jwcpkg"
-	"github.com/scbizu/Zafu_jwcInterface.git/jwc_api/models"
+	"github.com/scbizu/Zafu_jwcInterface/jwc_api/jwcpkg"
+	"github.com/scbizu/Zafu_jwcInterface/jwc_api/models"
 )
 
 type ExamController struct {

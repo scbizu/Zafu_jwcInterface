@@ -3,7 +3,7 @@ package controllers
 import (
 	"encoding/json"
 
-	"github.com/scbizu/Zafu_jwcInterface.git/jwc_api/models"
+	"github.com/scbizu/Zafu_jwcInterface/jwc_api/models"
 
 	"github.com/astaxie/beego"
 )

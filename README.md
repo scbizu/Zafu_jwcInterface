@@ -5,11 +5,16 @@
 * 首先这是一个Go项目 必须需要**Golang**的环境
 * 其次这个项目引入了beego框架 需要安装下**beego**的框架 beego的安装看[这里](http://beego.me/) 
 * 接下来就是
-		 git  clone https://github.com/scbizu/Zafu_jwcInterface
-* 依赖库
-	go get  github.com/scbizu/mahonia
-	go get gopkg.in/iconv.v1
 
+	 git  clone https://github.com/scbizu/Zafu_jwcInterface
+
+* 依赖库 :
+
+
+    	go get  github.com/scbizu/mahonia
+
+	 	go get gopkg.in/iconv.v1
+	
 * cd 到jwc_api下  bee run
 
 
